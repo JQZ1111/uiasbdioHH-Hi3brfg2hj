@@ -8,105 +8,67 @@
  * Module pour faire le modèle Logique du jeu
 **/
 
+int const TAILLEECHEQUIER = 8;
 
 
 namespace logic{
-//class Chessmodel;
 struct Emplacement;
 class Piece;
-class Roi;
-class Tour;
-class Cavalier;
 class Echequier;
-//class Move;
+class Game;
 }
-/*
-class Chessmodel
-{
-public:
-    Chessmodel();
-};
-*/
 
 struct Emplacement{
-    Emplacement();
-    Emplacement(char horizontalPos, int verticalPos);
-    int convertCharToInt();
-    char horizontalPos_;
-    int verticalPos_;
+    char horizontalPos;
+    int verticalPos;
+    int convertHorizontalPos();
 };
 
 class Piece{
-    // Si tu veux mettre le Q_OBJECT, faut absolument que la classe hérite d'une classe commençant par Q (QObject par exemple)
-    Q_OBJECT
 public:
     Piece();
-    Piece(Emplacement position, bool isBlack);
-    void changerPosition(Emplacement nouvellePosition);
+    Piece(Emplacement emplacement, bool isBlack);
     Emplacement getEmplacement() const;
-protected:
-    Emplacement position_;
+    void setEmplacement(Emplacement emplacement);
+    bool getIsBlack() const ;
+    void setBlack(bool isBlack);
+private:
+    Emplacement emplacement_;
     bool isBlack_;
 };
 
-class Roi: public Piece{
-    Q_OBJECT
-public:
-    Roi();
-    Roi(Emplacement position, bool isBlack);
-    bool canMoveTo(Emplacement nouvellePosition);
-protected:
-    static int nbrRois_;
-};
-
-class Tour:public Piece{
-    Q_OBJECT
-public:
-    Tour();
-    Tour(Emplacement position, bool isBlack);
-    bool canMoveTo(Emplacement nouvellePosition);
-};
-
-class Cavalier:public Piece{
-    Q_OBJECT
-public:
-    Cavalier();
-    Cavalier(Emplacement position, bool isBlack);
-    bool canMoveTo(Emplacement nouvellePosition);
-};
-
-class Echequier{
+class Echequier:public QObject{
     Q_OBJECT
 public:
     Echequier();
-    ~Echequier();
-    void placerPiece(Piece& pieceAPlacer, Emplacement emplacementAPlacer);
-    void deplacer(Piece& pieceADeplacer, Emplacement emplacementFinale);
-private:
-    std::vector<std::unique_ptr<Roi>> rois_;
-    std::vector<std::unique_ptr<Tour>> tours_;
-    std::vector<std::unique_ptr<Cavalier>> cavaliers_;
+    // Not yet type de piece, juste une piece
+    bool isTherePiece(Emplacement emplacement);
+public slots:
+    void ajouterPiece(Emplacement emplacement, bool isBlack);
 signals:
-    // Signal qu'on assigne une position à une certaine pièce
-    void assignerPosition();
-    // Signal qu'on enlève une pièce d'une certaine position
-    void enleverDeLaPosition();
+    void ajoutDUnePiece(Emplacement emplacement, bool isBlack);
+private:
+    std::vector<std::unique_ptr<Piece>> pieces_;
 };
-/*
-class Move{
-public:
-    // Ne devrait pas avoir de constructeur par défaut, car on crée la class seulement pour savoir si on bouge ou pas
-    Move(Echequier& echequier, Piece& pieceABouger, Emplacement& positionFinale);
 
-    void bouger();
-private:
-    Echequier& echequier_;
-    Piece& pieceABouger_;
-    Emplacement& positionFinale_;
+/*
+class Game:public QObject{
+    Q_OBJECT
+public:
+    Game();
+    void setEmplacementInteresser(Emplacement emplacementInteresser);
+    void setProchainEmplacement(Emplacement prochainEmplacement);
+    // check s'il y a une piece à l'emplacement. Si oui, donner à cette pièce l'emplacement prochain
+public slots:
+    void move();
 signals:
+    void pieceMoved(Emplacement emplacementInteresser, Emplacement prochainEmplacement);
+private:
+    std::unique_ptr<Echequier> echequier_;
+    Emplacement emplacementInteresser_;
+    Emplacement prochainEmplacement_;
+    bool veutBouger_;
 };
 */
-
-
 
 #endif // CHESSMODEL_H

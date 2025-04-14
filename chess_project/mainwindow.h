@@ -5,12 +5,13 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QWidget>
+#include "chessmodel.h"
+
 
 /*
  * Module pour la Vue et le Controlleur du modèle d'interface graphique
 **/
 
-int const TAILLEECHEQUIER = 8;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,13 +25,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    Emplacement findPositionButton(QPushButton* buttonToFind);
     ~MainWindow();
-
+public slots:
+    //void deplacerPiece();
+    void ajouterPiece(Emplacement emplacement, bool isBlack);
 private:
     Ui::MainWindow *ui;
     QGridLayout* layout_;
-    QWidget* echequier_;
+    QWidget* centralWidget_;
+    Echequier* echequierLogique_;
     QPushButton* buttons_[TAILLEECHEQUIER*TAILLEECHEQUIER];
+    Emplacement emplacementPrecedent_;
+    void makeCentralWidget();
 };
 #endif // MAINWINDOW_H
 

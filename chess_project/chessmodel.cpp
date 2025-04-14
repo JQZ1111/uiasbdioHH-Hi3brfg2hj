@@ -1,4 +1,6 @@
 #include "chessmodel.h"
+#include <iostream>
+
 
 /*
 Chessmodel::Chessmodel(){
@@ -6,71 +8,44 @@ Chessmodel::Chessmodel(){
 };
 */
 
-Emplacement::Emplacement():horizontalPos_('a'), verticalPos_(0){};
 
-Emplacement::Emplacement(char horizontalPos, int verticalPos):horizontalPos_(horizontalPos), verticalPos_(verticalPos){};
+int Emplacement::convertHorizontalPos(){return int(horizontalPos) - int('a');};
 
-int Emplacement::convertCharToInt(){
-    return int(horizontalPos_) - int('a');
-}
+Piece::Piece():emplacement_({'a', 9}), isBlack_(true){};
 
-Piece::Piece():position_(),isBlack_(true){};
+Piece::Piece(Emplacement emplacement, bool isBlack):emplacement_(emplacement), isBlack_(isBlack){};
 
-Piece::Piece(Emplacement position, bool isBlack):position_(position), isBlack_(isBlack){};
+Emplacement Piece::getEmplacement() const{emplacement_;};
 
-void Piece::changerPosition(Emplacement nouvellePosition){
-    position_ = nouvellePosition;
-}
+void Piece::setEmplacement(Emplacement emplacement){emplacement_ = emplacement;};
 
-Emplacement Piece::getEmplacement() const {return position_;}
+bool Piece::getIsBlack() const {return isBlack_;};
 
-int Roi::nbrRois_ = 0;
-
-Roi::Roi():Piece(){nbrRois_+=1;};
-
-Roi::Roi(Emplacement position, bool isBlack):Piece(position, isBlack){nbrRois_+=1;};
-
-bool Roi::canMoveTo(Emplacement nouvellePosition){
-    if (abs(nouvellePosition.verticalPos_ - position_.horizontalPos_)<=1 && abs(nouvellePosition.convertCharToInt() - position_.convertCharToInt())<=1)
-        return true;
-    else
-        return false;
-};
-
-Tour::Tour():Piece(){};
-
-Tour::Tour(Emplacement position, bool isBlack):Piece(position, isBlack){};
-
-bool Tour::canMoveTo(Emplacement nouvellePosition){
-    if (abs(position_.verticalPos_ - nouvellePosition.verticalPos_) == 0 || abs(position_.convertCharToInt() - nouvellePosition.convertCharToInt()) == 0)
-        return true;
-    else
-        return false;
-}
-
-Cavalier::Cavalier():Piece(){};
-
-Cavalier::Cavalier(Emplacement position, bool isBlack): Piece(position, isBlack){};
-
-bool Cavalier::canMoveTo(Emplacement nouvelleEmplacement){
-    if (abs(position_.verticalPos_ - nouvelleEmplacement.verticalPos_) == 3 && abs(position_.convertCharToInt() - nouvelleEmplacement.convertCharToInt())==2)
-        return true;
-    else if (abs(position_.verticalPos_ - nouvelleEmplacement.verticalPos_) == 2 && abs(position_.convertCharToInt() - nouvelleEmplacement.convertCharToInt())==3)
-        return true;
-    else
-        return false;
-}
+void Piece::setBlack(bool isBlack){isBlack_ = isBlack;}
 
 Echequier::Echequier(){};
 
-Echequier::~Echequier(){};
+//bool Echequier::isTherePiece(Emplacement emplacement){};
 
-void Echequier::placerPiece(Piece& pieceAPlacer, Emplacement emplacementAPlacer){
+void Echequier::ajouterPiece(Emplacement emplacement, bool isBlack){
+    pieces_.push_back(std::make_unique<Piece>());
+    if(pieces_.size() == 1){
+        pieces_[0]->setEmplacement(emplacement);
+        pieces_[0]->setBlack(isBlack);
+    }
+    else{
+        pieces_[pieces_.size()-1]->setEmplacement(emplacement);
+        pieces_[pieces_.size()-1]->setBlack(isBlack);
+    }
+    emit ajoutDUnePiece(emplacement, isBlack);
+};
 
-}
+//Game::Game(){};
 
-void Echequier::deplacer(Piece& pieceADeplacer, Emplacement emplacementFinale){
-    pieceADeplacer.changerPosition(emplacementFinale);
-}
+//void Game::setEmplacementInteresser(Emplacement emplacementInteresser){};
+
+//void Game::setProchainEmplacement(Emplacement prochainEmplacement){};
+
+//void Game::move(){};
 
 
