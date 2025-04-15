@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QWidget>
+#include <QComboBox>
 #include "chessmodel.h"
 
 
@@ -29,15 +30,28 @@ public:
     ~MainWindow();
 public slots:
     void deplacerPiece();
-    void ajouterPiece(Emplacement emplacement, bool isBlack);
+    void ajouterPiece();
+    void setHorizontalPosition(int horizontalPos);
+    void setVerticalPosition(int verticalPos);
+    void setNoirOuBlanc(int noirOuBlanc);
 private:
     Ui::MainWindow *ui;
     QGridLayout* layout_;
     QWidget* centralWidget_;
     Game* game_;
     QPushButton* buttons_[TAILLEECHEQUIER*TAILLEECHEQUIER];
+    QPushButton* addPieceButton_;
+    QComboBox* comboBoxVertical_;
+    QComboBox* comboBoxHorizontal_;
+    QComboBox* comboBoxNoirOuBlanc_;
     Emplacement emplacementPrecedent_;
+    char pieceHorizontalPos_;
+    int pieceVerticalPos_;
+    bool noirOuPas_;
     void makeCentralWidget();
+    void makeComboBox();
+signals:
+    void pieceAjouter(Emplacement emplacement, bool isBlack);
 };
 #endif // MAINWINDOW_H
 
