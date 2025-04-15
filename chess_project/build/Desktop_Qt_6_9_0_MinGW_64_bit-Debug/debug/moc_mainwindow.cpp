@@ -39,17 +39,20 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "MainWindow",
-        "ajouterPiece",
+        "deplacerPiece",
         "",
+        "ajouterPiece",
         "Emplacement",
         "emplacement",
         "isBlack"
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Slot 'deplacerPiece'
+        QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'ajouterPiece'
-        QtMocHelpers::SlotData<void(Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
+        QtMocHelpers::SlotData<void(Emplacement, bool)>(3, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 4, 5 }, { QMetaType::Bool, 6 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -74,7 +77,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 0: _t->deplacerPiece(); break;
+        case 1: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
         default: ;
         }
     }
@@ -99,14 +103,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

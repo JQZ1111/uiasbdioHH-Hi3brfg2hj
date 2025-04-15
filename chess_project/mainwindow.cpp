@@ -6,20 +6,25 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , echequierLogique_()
+    , game_()
 {
     ui->setupUi(this);
     makeCentralWidget();
-    QObject::connect(echequierLogique_, SIGNAL(ajoutDUnePiece(Emplacement,bool)), this, SLOT(ajouterPiece(Emplacement,bool)));
-    echequierLogique_->ajouterPiece({'a', 5}, true);
+    QObject::connect((game_->getEchequier()).get(), SIGNAL(ajoutDUnePiece(Emplacement,bool)), this, SLOT(ajouterPiece(Emplacement,bool)));
+    game_->getEchequier()->ajouterPiece({'a', 5}, false);// Sill does not work well for white piece
     // Cant center it tho
+    for(int i = 0; i < TAILLEECHEQUIER; i++){
+        for(int j = 0; j < TAILLEECHEQUIER; j ++){
+            QObject::connect(buttons_[TAILLEECHEQUIER*j + i], SIGNAL(clicked()), this, SLOT(deplacerPiece()));// aaand it crashed
+        }
+    }
 }
 
 void MainWindow::makeCentralWidget(){
     layout_ = new QGridLayout();
     layout_->setSpacing(0);
     layout_->setContentsMargins(0, 0, 0, 0);
-    echequierLogique_ = new Echequier;
+    game_ = new Game();
     centralWidget_ = new QWidget();
     for(int i = 0; i < TAILLEECHEQUIER; i++){
         for(int j = 0; j<TAILLEECHEQUIER; j++){
@@ -57,30 +62,29 @@ void MainWindow::ajouterPiece(Emplacement emplacement, bool isBlack){
         palette.setColor(QPalette::WindowText, color);
         buttons_[TAILLEECHEQUIER*emplacement.convertHorizontalPos() + emplacement.verticalPos]->setPalette(palette);
     }
-    int a = TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos();
     buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("P");
 }
-/*
-void MainWindow::deplacePiece(){
+
+void MainWindow::deplacerPiece(){
     QPushButton* button = qobject_cast<QPushButton*>(sender());
     Emplacement position = findPositionButton(button);
-    echequierLogique_->move(position);
-    if(!echequierLogique_->getPreparerBougerOuNon()){
+    game_->move(position);
+    if(!game_->getVeutBouger()){
         emplacementPrecedent_ = position;
     }
     else{
-        buttons_[TAILLEECHEQUIER*emplacementPrecedent_.convertCharToInt() + emplacementPrecedent_.verticalPos_]->setText("");
-        buttons_[TAILLEECHEQUIER*position.convertCharToInt() + position.verticalPos_]->setText(typeid(*(echequierLogique_->getPieceADeplacer())).name());
+        buttons_[TAILLEECHEQUIER*emplacementPrecedent_.convertHorizontalPos() + emplacementPrecedent_.verticalPos]->setText("");
+        buttons_[TAILLEECHEQUIER*position.convertHorizontalPos() + position.verticalPos]->setText("P"); // changer ca quand on aura plus qu'une type de piece
     }
 
 }
-*/
+
 MainWindow::~MainWindow()
 {
     delete ui;
     delete centralWidget_;
     delete layout_;
-    delete echequierLogique_;
+    delete game_;
     for(int i = 0; i<TAILLEECHEQUIER*TAILLEECHEQUIER; i++){
         delete buttons_[i];
     }

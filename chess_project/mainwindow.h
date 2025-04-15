@@ -28,13 +28,13 @@ public:
     Emplacement findPositionButton(QPushButton* buttonToFind);
     ~MainWindow();
 public slots:
-    //void deplacerPiece();
+    void deplacerPiece();
     void ajouterPiece(Emplacement emplacement, bool isBlack);
 private:
     Ui::MainWindow *ui;
     QGridLayout* layout_;
     QWidget* centralWidget_;
-    Echequier* echequierLogique_;
+    Game* game_;
     QPushButton* buttons_[TAILLEECHEQUIER*TAILLEECHEQUIER];
     Emplacement emplacementPrecedent_;
     void makeCentralWidget();
