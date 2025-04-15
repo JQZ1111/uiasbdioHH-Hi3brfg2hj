@@ -20,6 +20,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+namespace vue{
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -57,5 +58,7 @@ private:
 signals:
     void pieceAjouter(std::string pieceType, logic::Emplacement emplacement, bool isBlack);
 };
+}
+
 #endif // MAINWINDOW_H
 

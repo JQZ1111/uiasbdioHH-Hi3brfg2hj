@@ -4,7 +4,7 @@
 #include <QComboBox>
 #include <qcombobox.h>
 
-
+namespace vue{
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -159,5 +159,6 @@ MainWindow::~MainWindow()
     for(int i = 0; i<TAILLEECHEQUIER*TAILLEECHEQUIER; i++){
         delete buttons_[i];
     }
+}
 }
 
