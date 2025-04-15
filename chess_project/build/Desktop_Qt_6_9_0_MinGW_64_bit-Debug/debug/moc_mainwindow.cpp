@@ -41,6 +41,8 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "MainWindow",
         "pieceAjouter",
         "",
+        "std::string",
+        "pieceType",
         "Emplacement",
         "emplacement",
         "isBlack",
@@ -51,29 +53,35 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "setVerticalPosition",
         "verticalPos",
         "setNoirOuBlanc",
-        "noirOuBlanc"
+        "noirOuBlanc",
+        "setTypePieceAjouter",
+        "pieceTypeIndex"
     };
 
     QtMocHelpers::UintData qt_methods {
         // Signal 'pieceAjouter'
-        QtMocHelpers::SignalData<void(Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
+        QtMocHelpers::SignalData<void(std::string, Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 4 }, { 0x80000000 | 5, 6 }, { QMetaType::Bool, 7 },
         }}),
         // Slot 'deplacerPiece'
-        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'ajouterPiece'
-        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'setHorizontalPosition'
-        QtMocHelpers::SlotData<void(int)>(8, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 9 },
-        }}),
-        // Slot 'setVerticalPosition'
         QtMocHelpers::SlotData<void(int)>(10, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::Int, 11 },
         }}),
-        // Slot 'setNoirOuBlanc'
+        // Slot 'setVerticalPosition'
         QtMocHelpers::SlotData<void(int)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::Int, 13 },
+        }}),
+        // Slot 'setNoirOuBlanc'
+        QtMocHelpers::SlotData<void(int)>(14, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 15 },
+        }}),
+        // Slot 'setTypePieceAjouter'
+        QtMocHelpers::SlotData<void(int)>(16, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 17 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -98,17 +106,18 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->pieceAjouter((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 0: _t->pieceAjouter((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         case 1: _t->deplacerPiece(); break;
         case 2: _t->ajouterPiece(); break;
         case 3: _t->setHorizontalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 4: _t->setVerticalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 5: _t->setNoirOuBlanc((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->setTypePieceAjouter((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)(Emplacement , bool )>(_a, &MainWindow::pieceAjouter, 0))
+        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)(std::string , Emplacement , bool )>(_a, &MainWindow::pieceAjouter, 0))
             return;
     }
 }
@@ -132,21 +141,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }
 
 // SIGNAL 0
-void MainWindow::pieceAjouter(Emplacement _t1, bool _t2)
+void MainWindow::pieceAjouter(std::string _t1, Emplacement _t2, bool _t3)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
+    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2, _t3);
 }
 QT_WARNING_POP

@@ -37,6 +37,8 @@ private:
     bool isBlack_;
 };
 
+
+
 struct  Echequier:public QObject{
     Q_OBJECT
 public:
@@ -44,7 +46,7 @@ public:
     bool isTherePiece(Emplacement emplacement);
     std::vector<std::unique_ptr<Piece>> pieces_;
 public slots:
-    void ajouterPiece(Emplacement emplacement, bool isBlack);
+    void ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack);
     // mettre un enleverPiece
 signals:
     void ajoutDUnePiece(Emplacement emplacement, bool isBlack);

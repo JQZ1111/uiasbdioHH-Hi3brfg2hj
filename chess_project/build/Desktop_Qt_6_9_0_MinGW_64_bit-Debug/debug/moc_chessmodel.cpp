@@ -44,7 +44,9 @@ template <> constexpr inline auto Echequier::qt_create_metaobjectdata<qt_meta_ta
         "Emplacement",
         "emplacement",
         "isBlack",
-        "ajouterPiece"
+        "ajouterPiece",
+        "std::string",
+        "pieceType"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -53,8 +55,8 @@ template <> constexpr inline auto Echequier::qt_create_metaobjectdata<qt_meta_ta
             { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
         }}),
         // Slot 'ajouterPiece'
-        QtMocHelpers::SlotData<void(Emplacement, bool)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
+        QtMocHelpers::SlotData<void(std::string, Emplacement, bool)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 7, 8 }, { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -80,7 +82,7 @@ void Echequier::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->ajoutDUnePiece((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
-        case 1: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 1: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         default: ;
         }
     }

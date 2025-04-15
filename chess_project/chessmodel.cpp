@@ -33,7 +33,7 @@ bool Echequier::isTherePiece(Emplacement emplacement){
     return false;
 };
 
-void Echequier::ajouterPiece(Emplacement emplacement, bool isBlack){
+void Echequier::ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack){
     pieces_.push_back(std::make_unique<Piece>());
     if(pieces_.size() == 1){
         pieces_[0]->setEmplacement(emplacement);

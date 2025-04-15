@@ -34,6 +34,7 @@ public slots:
     void setHorizontalPosition(int horizontalPos);
     void setVerticalPosition(int verticalPos);
     void setNoirOuBlanc(int noirOuBlanc);
+    void setTypePieceAjouter(int pieceTypeIndex);
 private:
     Ui::MainWindow *ui;
     QGridLayout* layout_;
@@ -44,14 +45,16 @@ private:
     QComboBox* comboBoxVertical_;
     QComboBox* comboBoxHorizontal_;
     QComboBox* comboBoxNoirOuBlanc_;
+    QComboBox* comboBoxPiecesSelection_;
     Emplacement emplacementPrecedent_;
     char pieceHorizontalPos_;
     int pieceVerticalPos_;
     bool noirOuPas_;
+    std::string typePieceAjouter_;
     void makeCentralWidget();
     void makeComboBox();
 signals:
-    void pieceAjouter(Emplacement emplacement, bool isBlack);
+    void pieceAjouter(std::string pieceType, Emplacement emplacement, bool isBlack);
 };
 #endif // MAINWINDOW_H
 
