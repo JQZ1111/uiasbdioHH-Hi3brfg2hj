@@ -14,14 +14,14 @@ MainWindow::MainWindow(QWidget *parent)
     , noirOuPas_(true)
     , typePieceAjouter_("")
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
     makeComboBox();
     QObject::connect(comboBoxHorizontal_, SIGNAL(currentIndexChanged(int)), this, SLOT(setHorizontalPosition(int)));
     QObject::connect(comboBoxVertical_, SIGNAL(currentIndexChanged(int)), this, SLOT(setVerticalPosition(int)));
     QObject::connect(comboBoxNoirOuBlanc_, SIGNAL(currentIndexChanged(int)), this, SLOT(setNoirOuBlanc(int)));
     QObject::connect(comboBoxPiecesSelection_, SIGNAL(currentIndexChanged(int)), this, SLOT(setTypePieceAjouter(int)));
     makeCentralWidget();
-    QObject::connect(this, SIGNAL(pieceAjouter(std::string, Emplacement, bool)), game_->getEchequier().get(), SLOT(ajouterPiece(std::string, Emplacement,bool)));
+    QObject::connect(this, SIGNAL(pieceAjouter(std::string, logic::Emplacement, bool)), game_->getEchequier().get(), SLOT(ajouterPiece(std::string, logic::Emplacement,bool)));
     QObject::connect(addPieceButton_, SIGNAL(clicked()), this, SLOT(ajouterPiece()));
     // Cant center it tho
     for(int i = 0; i < TAILLEECHEQUIER; i++){
@@ -52,7 +52,7 @@ void MainWindow::makeCentralWidget(){
     layout_ = new QGridLayout();
     layout_->setSpacing(0);
     layout_->setContentsMargins(0, 0, 0, 0);
-    game_ = new Game();
+    game_ = new logic::Game();
     centralWidget_ = new QWidget();
     addPieceButton_ = new QPushButton();
     for(int i = 0; i < TAILLEECHEQUIER; i++){
@@ -105,7 +105,7 @@ void MainWindow::setNoirOuBlanc(int noirOuBlanc){
         noirOuPas_ = false;
 }
 
-Emplacement MainWindow::findPositionButton(QPushButton* buttonToFind){
+logic::Emplacement MainWindow::findPositionButton(QPushButton* buttonToFind){
     for(unsigned long long i = 0; i<TAILLEECHEQUIER*TAILLEECHEQUIER; i++){
         if(buttons_[i] == buttonToFind){
             char horizontalPos = char(i%TAILLEECHEQUIER + int('a'));
@@ -117,7 +117,7 @@ Emplacement MainWindow::findPositionButton(QPushButton* buttonToFind){
 }
 
 void MainWindow::ajouterPiece(){
-    Emplacement emplacement = {pieceHorizontalPos_, pieceVerticalPos_};
+    logic::Emplacement emplacement = {pieceHorizontalPos_, pieceVerticalPos_};
     bool isBlack = noirOuPas_;
     std::string typePieceAjouter = typePieceAjouter_;
     if(!isBlack){
@@ -137,15 +137,16 @@ void MainWindow::ajouterPiece(){
 
 void MainWindow::deplacerPiece(){
     QPushButton* button = qobject_cast<QPushButton*>(sender());
-    Emplacement position = findPositionButton(button);
+    logic::Emplacement position = findPositionButton(button);
     bool nePasDeplacer = game_->move(position);
     // If the text at the position of button is blank, dont do anything
     if(game_->getVeutBouger() && button->text() != ""){
         emplacementPrecedent_ = position;
+        labelPieceDeplacer_ = button->text().at(0);
     }
     else if (!nePasDeplacer && button->text() == ""){
         buttons_[TAILLEECHEQUIER*emplacementPrecedent_.verticalPos + emplacementPrecedent_.convertHorizontalPos()]->setText("");
-        buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText("P"); // changer ca quand on aura plus qu'une type de piece
+        buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText(labelPieceDeplacer_); // changer ca quand on aura plus qu'une type de piece
     }
 }
 

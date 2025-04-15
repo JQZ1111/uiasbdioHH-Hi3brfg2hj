@@ -12,11 +12,7 @@ int const TAILLEECHEQUIER = 8;
 
 
 namespace logic{
-struct Emplacement;
-class Piece;
-struct Echequier;
-class Game;
-}
+
 
 struct Emplacement{
     char horizontalPos;
@@ -68,10 +64,10 @@ public:
     bool isTherePiece(Emplacement emplacement);
     std::vector<std::unique_ptr<Tour>> pieces_;
 public slots:
-    void ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack);
+    void ajouterPiece(std::string pieceType, logic::Emplacement emplacement, bool isBlack);
     // mettre un enleverPiece
 signals:
-    void ajoutDUnePiece(Emplacement emplacement, bool isBlack);
+    void ajoutDUnePiece(logic::Emplacement emplacement, bool isBlack);
 };
 
 
@@ -85,15 +81,15 @@ public:
     bool getVeutBouger() const;
     // check s'il y a une piece à l'emplacement. Si oui, donner à cette pièce l'emplacement prochain
 public slots:
-    bool move(Emplacement positionInitialOuFinal);
+    bool move(logic::Emplacement positionInitialOuFinal);
 signals:
-    void pieceMoved(Emplacement emplacementInteresser, Emplacement prochainEmplacement);
+    void pieceMoved(logic::Emplacement emplacementInteresser, logic::Emplacement prochainEmplacement);
 private:
     std::shared_ptr<Echequier> echequier_;
     Emplacement emplacementInteresser_;
     Emplacement prochainEmplacement_;
     bool veutBouger_;
 };
-
+}
 
 #endif // CHESSMODEL_H

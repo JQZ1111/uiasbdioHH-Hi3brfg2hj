@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    Emplacement findPositionButton(QPushButton* buttonToFind);
+    logic::Emplacement findPositionButton(QPushButton* buttonToFind);
     ~MainWindow();
 public slots:
     void deplacerPiece();
@@ -39,22 +39,23 @@ private:
     Ui::MainWindow *ui;
     QGridLayout* layout_;
     QWidget* centralWidget_;
-    Game* game_;
+    logic::Game* game_;
     QPushButton* buttons_[TAILLEECHEQUIER*TAILLEECHEQUIER];
     QPushButton* addPieceButton_;
     QComboBox* comboBoxVertical_;
     QComboBox* comboBoxHorizontal_;
     QComboBox* comboBoxNoirOuBlanc_;
     QComboBox* comboBoxPiecesSelection_;
-    Emplacement emplacementPrecedent_;
+    logic::Emplacement emplacementPrecedent_;
     char pieceHorizontalPos_;
     int pieceVerticalPos_;
     bool noirOuPas_;
     std::string typePieceAjouter_;
     void makeCentralWidget();
     void makeComboBox();
+    QChar labelPieceDeplacer_;
 signals:
-    void pieceAjouter(std::string pieceType, Emplacement emplacement, bool isBlack);
+    void pieceAjouter(std::string pieceType, logic::Emplacement emplacement, bool isBlack);
 };
 #endif // MAINWINDOW_H
 

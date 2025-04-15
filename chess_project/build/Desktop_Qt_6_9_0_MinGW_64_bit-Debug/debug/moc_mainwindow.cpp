@@ -43,7 +43,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "",
         "std::string",
         "pieceType",
-        "Emplacement",
+        "logic::Emplacement",
         "emplacement",
         "isBlack",
         "deplacerPiece",
@@ -60,7 +60,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
 
     QtMocHelpers::UintData qt_methods {
         // Signal 'pieceAjouter'
-        QtMocHelpers::SignalData<void(std::string, Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+        QtMocHelpers::SignalData<void(std::string, logic::Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 3, 4 }, { 0x80000000 | 5, 6 }, { QMetaType::Bool, 7 },
         }}),
         // Slot 'deplacerPiece'
@@ -106,7 +106,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->pieceAjouter((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 0: _t->pieceAjouter((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         case 1: _t->deplacerPiece(); break;
         case 2: _t->ajouterPiece(); break;
         case 3: _t->setHorizontalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
@@ -117,7 +117,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)(std::string , Emplacement , bool )>(_a, &MainWindow::pieceAjouter, 0))
+        if (QtMocHelpers::indexOfMethod<void (MainWindow::*)(std::string , logic::Emplacement , bool )>(_a, &MainWindow::pieceAjouter, 0))
             return;
     }
 }
@@ -154,7 +154,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void MainWindow::pieceAjouter(std::string _t1, Emplacement _t2, bool _t3)
+void MainWindow::pieceAjouter(std::string _t1, logic::Emplacement _t2, bool _t3)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2, _t3);
 }

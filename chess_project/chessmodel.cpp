@@ -8,7 +8,7 @@ Chessmodel::Chessmodel(){
 };
 */
 
-
+namespace logic{
 int Emplacement::convertHorizontalPos(){return int(horizontalPos) - int('a');};
 
 Piece::Piece():emplacement_({'a', 9}), isBlack_(true){};
@@ -123,5 +123,5 @@ bool Game::move(Emplacement positionInitialOuFinal){
 
     }
 };
-
+}
 
