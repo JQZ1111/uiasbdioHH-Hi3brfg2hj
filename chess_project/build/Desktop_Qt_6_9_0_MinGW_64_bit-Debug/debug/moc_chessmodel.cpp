@@ -150,7 +150,7 @@ template <> constexpr inline auto Game::qt_create_metaobjectdata<qt_meta_tag_ZN4
             { 0x80000000 | 3, 4 }, { 0x80000000 | 3, 5 },
         }}),
         // Slot 'move'
-        QtMocHelpers::SlotData<void(Emplacement)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+        QtMocHelpers::SlotData<bool(Emplacement)>(6, 2, QMC::AccessPublic, QMetaType::Bool, {{
             { 0x80000000 | 3, 7 },
         }}),
     };
@@ -177,7 +177,8 @@ void Game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->pieceMoved((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[2]))); break;
-        case 1: _t->move((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1]))); break;
+        case 1: { bool _r = _t->move((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     }

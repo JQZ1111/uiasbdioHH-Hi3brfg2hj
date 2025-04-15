@@ -61,7 +61,7 @@ public:
     bool getVeutBouger() const;
     // check s'il y a une piece à l'emplacement. Si oui, donner à cette pièce l'emplacement prochain
 public slots:
-    void move(Emplacement positionInitialOuFinal);
+    bool move(Emplacement positionInitialOuFinal);
 signals:
     void pieceMoved(Emplacement emplacementInteresser, Emplacement prochainEmplacement);
 private:

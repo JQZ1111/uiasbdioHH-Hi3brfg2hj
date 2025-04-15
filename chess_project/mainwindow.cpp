@@ -68,15 +68,15 @@ void MainWindow::ajouterPiece(Emplacement emplacement, bool isBlack){
 void MainWindow::deplacerPiece(){
     QPushButton* button = qobject_cast<QPushButton*>(sender());
     Emplacement position = findPositionButton(button);
-    game_->move(position);
-    if(!game_->getVeutBouger()){
+    bool nePasDeplacer = game_->move(position);
+    // If the text at the position of button is blank, dont do anything
+    if(game_->getVeutBouger() && button->text() != ""){
         emplacementPrecedent_ = position;
     }
-    else{
-        buttons_[TAILLEECHEQUIER*emplacementPrecedent_.convertHorizontalPos() + emplacementPrecedent_.verticalPos]->setText("");
-        buttons_[TAILLEECHEQUIER*position.convertHorizontalPos() + position.verticalPos]->setText("P"); // changer ca quand on aura plus qu'une type de piece
+    else if (!nePasDeplacer && button->text() == ""){
+        buttons_[TAILLEECHEQUIER*emplacementPrecedent_.verticalPos + emplacementPrecedent_.convertHorizontalPos()]->setText("");
+        buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText("P"); // changer ca quand on aura plus qu'une type de piece
     }
-
 }
 
 MainWindow::~MainWindow()

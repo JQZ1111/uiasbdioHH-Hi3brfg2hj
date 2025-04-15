@@ -64,12 +64,14 @@ bool Game::getVeutBouger() const {
     return veutBouger_;
 }
 
-void Game::move(Emplacement positionInitialOuFinal){
+bool Game::move(Emplacement positionInitialOuFinal){
     if (!veutBouger_){
         if(echequier_->isTherePiece(positionInitialOuFinal)){
             veutBouger_ = true;
             emplacementInteresser_ = positionInitialOuFinal;
+            return true;
         }
+        return true;
     }
     else{
         for(auto&& piece:echequier_->pieces_){
@@ -77,9 +79,9 @@ void Game::move(Emplacement positionInitialOuFinal){
                 piece->setEmplacement(positionInitialOuFinal);
                 veutBouger_ = false;
                 prochainEmplacement_ = positionInitialOuFinal;
-                emit pieceMoved(emplacementInteresser_, prochainEmplacement_);
             }
         }
+        return false;
 
     }
 };
