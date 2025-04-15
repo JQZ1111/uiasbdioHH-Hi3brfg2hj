@@ -2,9 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QGridLayout>
+#include <QWidget>
+#include "chessmodel.h"
+
+
 /*
  * Module pour la Vue et le Controlleur du modèle d'interface graphique
 **/
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,9 +25,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    Emplacement findPositionButton(QPushButton* buttonToFind);
     ~MainWindow();
-
+public slots:
+    void deplacerPiece();
+    void ajouterPiece(Emplacement emplacement, bool isBlack);
 private:
     Ui::MainWindow *ui;
+    QGridLayout* layout_;
+    QWidget* centralWidget_;
+    Game* game_;
+    QPushButton* buttons_[TAILLEECHEQUIER*TAILLEECHEQUIER];
+    Emplacement emplacementPrecedent_;
+    void makeCentralWidget();
 };
 #endif // MAINWINDOW_H
+
