@@ -23,6 +23,43 @@ bool Piece::getIsBlack() const {return isBlack_;};
 
 void Piece::setBlack(bool isBlack){isBlack_ = isBlack;}
 
+Roi::Roi():Piece(), typeDePiece_("Roi"){nbrRois_+=1;};
+
+Roi::Roi(Emplacement emplacement, bool isBlack):Piece(emplacement, isBlack), typeDePiece_("Roi"){nbrRois_ += 1;};
+
+bool Roi::peutDeplacer(Emplacement emplacementFutur){
+    if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos())<=1 && abs(emplacement_.verticalPos - emplacementFutur.verticalPos) <= 1)
+        return true;
+    else
+        return false;
+};
+
+int Roi::nbrRois_ = 0;
+
+Tour::Tour():Piece(), typeDePiece_("Tour"){};
+
+Tour::Tour(Emplacement emplacement, bool isBlack):Piece(emplacement, isBlack), typeDePiece_("Tour"){};
+
+bool Tour::peutDeplacer(Emplacement emplacementFutur){
+    if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 0 || abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 0)
+        return true;
+    else
+        return false;
+};
+
+Cavalier::Cavalier():Piece(), typeDePiece_("Cavalier"){};
+
+Cavalier::Cavalier(Emplacement emplacement, bool isBlack):Piece(emplacement, isBlack), typeDePiece_("Cavalier"){};
+
+bool Cavalier::peutDeplacer(Emplacement emplacementFutur){
+    if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 3 || abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 2)
+        return true;
+    else if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 2 || abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 3)
+        return true;
+    else
+        return false;
+};
+
 Echequier::Echequier(){};
 
 bool Echequier::isTherePiece(Emplacement emplacement){
@@ -34,7 +71,8 @@ bool Echequier::isTherePiece(Emplacement emplacement){
 };
 
 void Echequier::ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack){
-    pieces_.push_back(std::make_unique<Piece>());
+    // Need to change that, piece is an abstract class now
+    pieces_.push_back(std::make_unique<Tour>());
     if(pieces_.size() == 1){
         pieces_[0]->setEmplacement(emplacement);
         pieces_[0]->setBlack(isBlack);

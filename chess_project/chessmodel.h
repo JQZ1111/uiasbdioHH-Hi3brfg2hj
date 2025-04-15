@@ -32,19 +32,41 @@ public:
     void setEmplacement(Emplacement emplacement);
     bool getIsBlack() const ;
     void setBlack(bool isBlack);
-private:
+    virtual bool peutDeplacer(Emplacement emplacementFuture) = 0;
+    virtual ~Piece() = default;
+protected:
     Emplacement emplacement_;
     bool isBlack_;
 };
 
+struct Roi:public Piece{
+    Roi();
+    Roi(Emplacement emplacement, bool isBlack);
+    bool peutDeplacer(Emplacement emplacementFutur);
+    std::string typeDePiece_;
+    static int nbrRois_;
+};
 
+struct Tour:public Piece{
+    Tour();
+    Tour(Emplacement emplacement, bool isBlack);
+    bool peutDeplacer(Emplacement emplacementFutur);
+    std::string typeDePiece_;
+};
+
+struct Cavalier:public Piece{
+    Cavalier();
+    Cavalier(Emplacement emplacement, bool isBlack);
+    bool peutDeplacer(Emplacement emplacementFutur);
+    std::string typeDePiece_;
+};
 
 struct  Echequier:public QObject{
     Q_OBJECT
 public:
     Echequier();
     bool isTherePiece(Emplacement emplacement);
-    std::vector<std::unique_ptr<Piece>> pieces_;
+    std::vector<std::unique_ptr<Tour>> pieces_;
 public slots:
     void ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack);
     // mettre un enleverPiece

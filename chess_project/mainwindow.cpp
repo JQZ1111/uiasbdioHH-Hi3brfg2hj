@@ -129,7 +129,7 @@ void MainWindow::ajouterPiece(){
     if(typePieceAjouter == "Roi")
         buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("R");
     else if(typePieceAjouter == "Tour")
-        buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("R");
+        buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("T");
     else if(typePieceAjouter_ == "Cavalier")
         buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("C");
     emit pieceAjouter(typePieceAjouter, emplacement, isBlack);
