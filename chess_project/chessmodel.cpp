@@ -81,24 +81,26 @@ bool Echequier::isTherePiece(Emplacement emplacement){
 
 void Echequier::ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack){
     // Need to change that, piece is an abstract class now
-    if(pieceType == "Roi"){
-        pieces_.push_back(std::make_unique<Roi>());
-        // verifier cmb de rois il y a
-        //if(dynamic_cast<Roi*>(&(*(pieces_[pieces_.size() - 1])))->nbrRois_)
+    if(!isTherePiece(emplacement)){
+        if(pieceType == "Roi"){
+            pieces_.push_back(std::make_unique<Roi>());
+            // verifier cmb de rois il y a
+            // if(dynamic_cast<Roi*>(&(*(pieces_[pieces_.size() - 1])))->nbrRois_)
+        }
+        else if(pieceType == "Tour")
+            pieces_.push_back(std::make_unique<Tour>());
+        else if(pieceType == "Cavalier")
+            pieces_.push_back(std::make_unique<Cavalier>());
+        if(pieces_.size() == 1){
+            pieces_[0]->setEmplacement(emplacement);
+            pieces_[0]->setBlack(isBlack);
+        }
+        else{
+            pieces_[pieces_.size()-1]->setEmplacement(emplacement);
+            pieces_[pieces_.size()-1]->setBlack(isBlack);
+        }
+        emit ajoutDUnePiece(pieceType, emplacement, isBlack);
     }
-    else if(pieceType == "Tour")
-        pieces_.push_back(std::make_unique<Tour>());
-    else if(pieceType == "Cavalier")
-        pieces_.push_back(std::make_unique<Cavalier>());
-    if(pieces_.size() == 1){
-        pieces_[0]->setEmplacement(emplacement);
-        pieces_[0]->setBlack(isBlack);
-    }
-    else{
-        pieces_[pieces_.size()-1]->setEmplacement(emplacement);
-        pieces_[pieces_.size()-1]->setBlack(isBlack);
-    }
-    emit ajoutDUnePiece(emplacement, isBlack);
 };
 
 int Echequier::trouverPiece(Emplacement emplacement){
@@ -127,6 +129,26 @@ bool Game::getVeutBouger() const {
     return veutBouger_;
 }
 
+bool Game::isIllegalMove(std::unique_ptr<Piece>& piece, Emplacement positionFinale) const{
+    bool isIllegal = false;
+    if(piece->getTypeDePiece()=="Roi"){
+        if(!dynamic_cast<Roi*>(&(*(piece)))->peutDeplacer(positionFinale)){
+            isIllegal = true;
+        }
+    }
+    else if(piece->getTypeDePiece()=="Tour"){
+        if(!dynamic_cast<Tour*>(&(*(piece)))->peutDeplacer(positionFinale)){
+            isIllegal = true;
+        }
+    }
+    else if(piece->getTypeDePiece()=="Cavalier"){
+        if(!dynamic_cast<Cavalier*>(&(*(piece)))->peutDeplacer(positionFinale)){
+            isIllegal = true;
+        }
+    }
+    return isIllegal;
+}
+
 bool Game::move(Emplacement positionInitialOuFinal){
     if (!veutBouger_){
         if(echequier_->isTherePiece(positionInitialOuFinal)){
@@ -137,68 +159,58 @@ bool Game::move(Emplacement positionInitialOuFinal){
         return true;
     }
     else{
-        bool deplacementIlegal = false;
+        bool enEchec = false;
+        {
+            MoveTemporaire moveTemporaire(emplacementInteresser_, positionInitialOuFinal, this);
+            enEchec = moveTemporaire.enEchec();
+        }
         for(auto&& piece:echequier_->pieces_){
             if(piece->getEmplacement().convertHorizontalPos()==emplacementInteresser_.convertHorizontalPos()&&piece->getEmplacement().verticalPos==emplacementInteresser_.verticalPos){
-                if(piece->getTypeDePiece()=="Roi"){
-                    if(!dynamic_cast<Roi*>(&(*(piece)))->peutDeplacer(positionInitialOuFinal)){
-                        deplacementIlegal = true;
-                        veutBouger_ = false;
-                    }
-                }
-                if(piece->getTypeDePiece()=="Tour"){
-                    if(!dynamic_cast<Tour*>(&(*(piece)))->peutDeplacer(positionInitialOuFinal)){
-                        deplacementIlegal = true;
-                        veutBouger_ = false;
-                    }
-                }
-                if(piece->getTypeDePiece()=="Cavalier"){
-                    if(!dynamic_cast<Cavalier*>(&(*(piece)))->peutDeplacer(positionInitialOuFinal)){
-                        deplacementIlegal = true;
-                        veutBouger_ = false;
-                    }
-                }
-                if(!deplacementIlegal){
+                veutBouger_ = false;
+                if(!enEchec){
                     piece->setEmplacement(positionInitialOuFinal);
-                    veutBouger_ = false;
                     prochainEmplacement_ = positionInitialOuFinal;
                 }
             }
         }
-        return deplacementIlegal;
+        return enEchec;
     }
 };
 
 MoveTemporaire::MoveTemporaire(Emplacement positionInitiale, Emplacement positionFinale, Game* game):positionInitiale_(positionInitiale), positionFinale_(positionFinale), game_(game){};
 
 bool MoveTemporaire::enEchec(){
-    Emplacement emplacementRoi;
+    Emplacement emplacementRoi = {'z', 9};
     int indexPiece = game_->getEchequier()->trouverPiece(positionInitiale_);
-    game_->move(positionInitiale_);
-    game_->move(positionFinale_);
-    for(auto&& piece:game_->getEchequier()->pieces_){
-        if(piece->getTypeDePiece() == "Roi" && piece->getIsBlack() == game_->getEchequier()->pieces_[indexPiece]->getIsBlack()){
-            emplacementRoi = piece->getEmplacement();
+    bool enEchec = false;
+    bool isRoiBlack = false;
+    if(!game_->isIllegalMove(game_->getEchequier()->pieces_[indexPiece], positionFinale_)){
+        game_->getEchequier()->pieces_[indexPiece]->setEmplacement(positionFinale_);
+        for(auto&& piece:game_->getEchequier()->pieces_){
+            if(piece->getTypeDePiece() == "Roi" && piece->getIsBlack() == game_->getEchequier()->pieces_[indexPiece]->getIsBlack()){
+                emplacementRoi = piece->getEmplacement();
+                isRoiBlack = piece->getIsBlack();
+            }
         }
-        if(piece->getIsBlack() != game_->getEchequier()->pieces_[indexPiece]->getIsBlack()){
-            if(piece->getTypeDePiece() == "Tour"){
-                if(dynamic_cast<Tour*>(&(*(piece)))->peutDeplacer(emplacementRoi))
-                            return true;
+        for(auto&& piece:game_->getEchequier()->pieces_){
+            if(piece->getIsBlack() != isRoiBlack && emplacementRoi.verticalPos != 9){
+                if(piece->getTypeDePiece() == "Tour"){
+                    if(dynamic_cast<Tour*>(&(*(piece)))->peutDeplacer(emplacementRoi))
+                        enEchec = true;
+                }
+                else if(piece->getTypeDePiece() == "Cavalier"){
+                    if(dynamic_cast<Cavalier*>(&(*(piece)))->peutDeplacer(emplacementRoi))
+                        enEchec = true;;
+                }
             }
-            else if(piece->getTypeDePiece() == "Cavalier"){
-                if(dynamic_cast<Cavalier*>(&(*(piece)))->peutDeplacer(emplacementRoi))
-                    return true;
-            }
-            else
-                return false;
         }
     }
-    return false;
+    return enEchec;
 };
 
 MoveTemporaire::~MoveTemporaire(){
-    game_->move(positionFinale_);
-    game_->move(positionInitiale_);
+    int indexPiece =  game_->getEchequier()->trouverPiece(positionFinale_);
+    game_->getEchequier()->pieces_[indexPiece]->setEmplacement(positionInitiale_);
 };
 
 }
