@@ -41,22 +41,22 @@ template <> constexpr inline auto logic::Echequier::qt_create_metaobjectdata<qt_
         "logic::Echequier",
         "ajoutDUnePiece",
         "",
+        "std::string",
+        "pieceType",
         "logic::Emplacement",
         "emplacement",
         "isBlack",
-        "ajouterPiece",
-        "std::string",
-        "pieceType"
+        "ajouterPiece"
     };
 
     QtMocHelpers::UintData qt_methods {
         // Signal 'ajoutDUnePiece'
-        QtMocHelpers::SignalData<void(logic::Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
+        QtMocHelpers::SignalData<void(std::string, logic::Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 4 }, { 0x80000000 | 5, 6 }, { QMetaType::Bool, 7 },
         }}),
         // Slot 'ajouterPiece'
-        QtMocHelpers::SlotData<void(std::string, logic::Emplacement, bool)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 7, 8 }, { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
+        QtMocHelpers::SlotData<void(std::string, logic::Emplacement, bool)>(8, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 4 }, { 0x80000000 | 5, 6 }, { QMetaType::Bool, 7 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -81,13 +81,13 @@ void logic::Echequier::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     auto *_t = static_cast<Echequier *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->ajoutDUnePiece((*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 0: _t->ajoutDUnePiece((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         case 1: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (Echequier::*)(logic::Emplacement , bool )>(_a, &Echequier::ajoutDUnePiece, 0))
+        if (QtMocHelpers::indexOfMethod<void (Echequier::*)(std::string , logic::Emplacement , bool )>(_a, &Echequier::ajoutDUnePiece, 0))
             return;
     }
 }
@@ -124,9 +124,9 @@ int logic::Echequier::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void logic::Echequier::ajoutDUnePiece(logic::Emplacement _t1, bool _t2)
+void logic::Echequier::ajoutDUnePiece(std::string _t1, logic::Emplacement _t2, bool _t3)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
+    QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2, _t3);
 }
 namespace {
 struct qt_meta_tag_ZN5logic4GameE_t {};

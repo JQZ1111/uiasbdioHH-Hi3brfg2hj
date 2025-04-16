@@ -68,7 +68,7 @@ public slots:
     void ajouterPiece(std::string pieceType, logic::Emplacement emplacement, bool isBlack);
     // mettre un enleverPiece
 signals:
-    void ajoutDUnePiece(logic::Emplacement emplacement, bool isBlack);
+    void ajoutDUnePiece(std::string pieceType,logic::Emplacement emplacement, bool isBlack);
 };
 
 
@@ -81,6 +81,7 @@ public:
     std::shared_ptr<Echequier> getEchequier() const;
     bool getVeutBouger() const;
     // check s'il y a une piece à l'emplacement. Si oui, donner à cette pièce l'emplacement prochain
+    bool isIllegalMove(std::unique_ptr<Piece>& piece, Emplacement positionFinale) const;
 public slots:
     bool move(logic::Emplacement positionInitialOuFinal);
 signals:

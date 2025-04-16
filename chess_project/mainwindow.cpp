@@ -143,8 +143,15 @@ void MainWindow::deplacerPiece(){
     if(game_->getVeutBouger() && button->text() != ""){
         emplacementPrecedent_ = position;
         labelPieceDeplacer_ = button->text().at(0);
+        noirOuPas_ = !((button->styleSheet().mid(button->styleSheet().size() - 5, 5)) == "white");
     }
     else if (!nePasDeplacer && button->text() == ""){
+        if(!noirOuPas_){
+            if((position.verticalPos + position.convertHorizontalPos())%2 == 1)
+                buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setStyleSheet("background-color:yellow;color:white");
+            else
+                buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setStyleSheet("background-color:brown;color:white");
+        }
         buttons_[TAILLEECHEQUIER*emplacementPrecedent_.verticalPos + emplacementPrecedent_.convertHorizontalPos()]->setText("");
         buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText(labelPieceDeplacer_); // changer ca quand on aura plus qu'une type de piece
     }
