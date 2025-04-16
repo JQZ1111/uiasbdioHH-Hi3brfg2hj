@@ -30,16 +30,18 @@ public:
     void setBlack(bool isBlack);
     virtual bool peutDeplacer(Emplacement emplacementFuture) = 0;
     virtual ~Piece() = default;
+    std::string getTypeDePiece() const;
+    void setTypeDePiece(std::string typeDePiece);
 protected:
     Emplacement emplacement_;
     bool isBlack_;
+    std::string typeDePiece_;
 };
 
 struct Roi:public Piece{
     Roi();
     Roi(Emplacement emplacement, bool isBlack);
     bool peutDeplacer(Emplacement emplacementFutur);
-    std::string typeDePiece_;
     static int nbrRois_;
 };
 
@@ -47,14 +49,12 @@ struct Tour:public Piece{
     Tour();
     Tour(Emplacement emplacement, bool isBlack);
     bool peutDeplacer(Emplacement emplacementFutur);
-    std::string typeDePiece_;
 };
 
 struct Cavalier:public Piece{
     Cavalier();
     Cavalier(Emplacement emplacement, bool isBlack);
     bool peutDeplacer(Emplacement emplacementFutur);
-    std::string typeDePiece_;
 };
 
 struct  Echequier:public QObject{
@@ -62,7 +62,8 @@ struct  Echequier:public QObject{
 public:
     Echequier();
     bool isTherePiece(Emplacement emplacement);
-    std::vector<std::unique_ptr<Tour>> pieces_;
+    std::vector<std::unique_ptr<Piece>> pieces_;
+    int trouverPiece(Emplacement emplacement);
 public slots:
     void ajouterPiece(std::string pieceType, logic::Emplacement emplacement, bool isBlack);
     // mettre un enleverPiece
@@ -90,6 +91,18 @@ private:
     Emplacement prochainEmplacement_;
     bool veutBouger_;
 };
+
+class MoveTemporaire{
+public:
+    MoveTemporaire(Emplacement positionInitiale, Emplacement positionFinale, Game* game);
+    bool enEchec();
+    ~MoveTemporaire();
+private:
+    Emplacement positionInitiale_;
+    Emplacement positionFinale_;
+    Game* game_;
+};
+
 }
 
 #endif // CHESSMODEL_H
