@@ -61,9 +61,9 @@ Cavalier::Cavalier():Piece(){typeDePiece_ = "Cavalier";};
 Cavalier::Cavalier(Emplacement emplacement, bool isBlack):Piece(emplacement, isBlack){typeDePiece_ = "Cavalier";};
 
 bool Cavalier::peutDeplacer(Emplacement emplacementFutur){
-    if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 3 || abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 2)
+    if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 2 && abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 1)
         return true;
-    else if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 2 || abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 3)
+    else if(abs(emplacement_.convertHorizontalPos() - emplacementFutur.convertHorizontalPos()) == 1 && abs(emplacement_.verticalPos - emplacementFutur.verticalPos) == 2)
         return true;
     else
         return false;
@@ -81,11 +81,14 @@ bool Echequier::isTherePiece(Emplacement emplacement){
 
 void Echequier::ajouterPiece(std::string pieceType, Emplacement emplacement, bool isBlack){
     // Need to change that, piece is an abstract class now
-    if(pieceType == "Roi")
+    if(pieceType == "Roi"){
         pieces_.push_back(std::make_unique<Roi>());
-    if(pieceType == "Tour")
+        // verifier cmb de rois il y a
+        //if(dynamic_cast<Roi*>(&(*(pieces_[pieces_.size() - 1])))->nbrRois_)
+    }
+    else if(pieceType == "Tour")
         pieces_.push_back(std::make_unique<Tour>());
-    if(pieceType == "Cavalier")
+    else if(pieceType == "Cavalier")
         pieces_.push_back(std::make_unique<Cavalier>());
     if(pieces_.size() == 1){
         pieces_[0]->setEmplacement(emplacement);
@@ -134,15 +137,35 @@ bool Game::move(Emplacement positionInitialOuFinal){
         return true;
     }
     else{
+        bool deplacementIlegal = false;
         for(auto&& piece:echequier_->pieces_){
             if(piece->getEmplacement().convertHorizontalPos()==emplacementInteresser_.convertHorizontalPos()&&piece->getEmplacement().verticalPos==emplacementInteresser_.verticalPos){
-                piece->setEmplacement(positionInitialOuFinal);
-                veutBouger_ = false;
-                prochainEmplacement_ = positionInitialOuFinal;
+                if(piece->getTypeDePiece()=="Roi"){
+                    if(!dynamic_cast<Roi*>(&(*(piece)))->peutDeplacer(positionInitialOuFinal)){
+                        deplacementIlegal = true;
+                        veutBouger_ = false;
+                    }
+                }
+                if(piece->getTypeDePiece()=="Tour"){
+                    if(!dynamic_cast<Tour*>(&(*(piece)))->peutDeplacer(positionInitialOuFinal)){
+                        deplacementIlegal = true;
+                        veutBouger_ = false;
+                    }
+                }
+                if(piece->getTypeDePiece()=="Cavalier"){
+                    if(!dynamic_cast<Cavalier*>(&(*(piece)))->peutDeplacer(positionInitialOuFinal)){
+                        deplacementIlegal = true;
+                        veutBouger_ = false;
+                    }
+                }
+                if(!deplacementIlegal){
+                    piece->setEmplacement(positionInitialOuFinal);
+                    veutBouger_ = false;
+                    prochainEmplacement_ = positionInitialOuFinal;
+                }
             }
         }
-        return false;
-
+        return deplacementIlegal;
     }
 };
 
