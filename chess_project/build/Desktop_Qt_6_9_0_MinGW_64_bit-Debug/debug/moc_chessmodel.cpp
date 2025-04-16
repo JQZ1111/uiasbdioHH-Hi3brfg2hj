@@ -31,79 +31,81 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
-struct qt_meta_tag_ZN9EchequierE_t {};
+struct qt_meta_tag_ZN5logic9EchequierE_t {};
 } // unnamed namespace
 
-template <> constexpr inline auto Echequier::qt_create_metaobjectdata<qt_meta_tag_ZN9EchequierE_t>()
+template <> constexpr inline auto logic::Echequier::qt_create_metaobjectdata<qt_meta_tag_ZN5logic9EchequierE_t>()
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "Echequier",
+        "logic::Echequier",
         "ajoutDUnePiece",
         "",
-        "Emplacement",
+        "logic::Emplacement",
         "emplacement",
         "isBlack",
-        "ajouterPiece"
+        "ajouterPiece",
+        "std::string",
+        "pieceType"
     };
 
     QtMocHelpers::UintData qt_methods {
         // Signal 'ajoutDUnePiece'
-        QtMocHelpers::SignalData<void(Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+        QtMocHelpers::SignalData<void(logic::Emplacement, bool)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
         }}),
         // Slot 'ajouterPiece'
-        QtMocHelpers::SlotData<void(Emplacement, bool)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
+        QtMocHelpers::SlotData<void(std::string, logic::Emplacement, bool)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 7, 8 }, { 0x80000000 | 3, 4 }, { QMetaType::Bool, 5 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
     QtMocHelpers::UintData qt_enums {
     };
-    return QtMocHelpers::metaObjectData<Echequier, qt_meta_tag_ZN9EchequierE_t>(QMC::MetaObjectFlag{}, qt_stringData,
+    return QtMocHelpers::metaObjectData<Echequier, qt_meta_tag_ZN5logic9EchequierE_t>(QMC::MetaObjectFlag{}, qt_stringData,
             qt_methods, qt_properties, qt_enums);
 }
-Q_CONSTINIT const QMetaObject Echequier::staticMetaObject = { {
+Q_CONSTINIT const QMetaObject logic::Echequier::staticMetaObject = { {
     QMetaObject::SuperData::link<QObject::staticMetaObject>(),
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN9EchequierE_t>.stringdata,
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN9EchequierE_t>.data,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN5logic9EchequierE_t>.stringdata,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN5logic9EchequierE_t>.data,
     qt_static_metacall,
     nullptr,
-    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN9EchequierE_t>.metaTypes,
+    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN5logic9EchequierE_t>.metaTypes,
     nullptr
 } };
 
-void Echequier::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void logic::Echequier::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     auto *_t = static_cast<Echequier *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->ajoutDUnePiece((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
-        case 1: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 0: _t->ajoutDUnePiece((*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 1: _t->ajouterPiece((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (Echequier::*)(Emplacement , bool )>(_a, &Echequier::ajoutDUnePiece, 0))
+        if (QtMocHelpers::indexOfMethod<void (Echequier::*)(logic::Emplacement , bool )>(_a, &Echequier::ajoutDUnePiece, 0))
             return;
     }
 }
 
-const QMetaObject *Echequier::metaObject() const
+const QMetaObject *logic::Echequier::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Echequier::qt_metacast(const char *_clname)
+void *logic::Echequier::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN9EchequierE_t>.strings))
+    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN5logic9EchequierE_t>.strings))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int Echequier::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int logic::Echequier::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -122,22 +124,22 @@ int Echequier::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Echequier::ajoutDUnePiece(Emplacement _t1, bool _t2)
+void logic::Echequier::ajoutDUnePiece(logic::Emplacement _t1, bool _t2)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
 }
 namespace {
-struct qt_meta_tag_ZN4GameE_t {};
+struct qt_meta_tag_ZN5logic4GameE_t {};
 } // unnamed namespace
 
-template <> constexpr inline auto Game::qt_create_metaobjectdata<qt_meta_tag_ZN4GameE_t>()
+template <> constexpr inline auto logic::Game::qt_create_metaobjectdata<qt_meta_tag_ZN5logic4GameE_t>()
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "Game",
+        "logic::Game",
         "pieceMoved",
         "",
-        "Emplacement",
+        "logic::Emplacement",
         "emplacementInteresser",
         "prochainEmplacement",
         "move",
@@ -146,11 +148,11 @@ template <> constexpr inline auto Game::qt_create_metaobjectdata<qt_meta_tag_ZN4
 
     QtMocHelpers::UintData qt_methods {
         // Signal 'pieceMoved'
-        QtMocHelpers::SignalData<void(Emplacement, Emplacement)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
+        QtMocHelpers::SignalData<void(logic::Emplacement, logic::Emplacement)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 3, 4 }, { 0x80000000 | 3, 5 },
         }}),
         // Slot 'move'
-        QtMocHelpers::SlotData<bool(Emplacement)>(6, 2, QMC::AccessPublic, QMetaType::Bool, {{
+        QtMocHelpers::SlotData<bool(logic::Emplacement)>(6, 2, QMC::AccessPublic, QMetaType::Bool, {{
             { 0x80000000 | 3, 7 },
         }}),
     };
@@ -158,50 +160,50 @@ template <> constexpr inline auto Game::qt_create_metaobjectdata<qt_meta_tag_ZN4
     };
     QtMocHelpers::UintData qt_enums {
     };
-    return QtMocHelpers::metaObjectData<Game, qt_meta_tag_ZN4GameE_t>(QMC::MetaObjectFlag{}, qt_stringData,
+    return QtMocHelpers::metaObjectData<Game, qt_meta_tag_ZN5logic4GameE_t>(QMC::MetaObjectFlag{}, qt_stringData,
             qt_methods, qt_properties, qt_enums);
 }
-Q_CONSTINIT const QMetaObject Game::staticMetaObject = { {
+Q_CONSTINIT const QMetaObject logic::Game::staticMetaObject = { {
     QMetaObject::SuperData::link<QObject::staticMetaObject>(),
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN4GameE_t>.stringdata,
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN4GameE_t>.data,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN5logic4GameE_t>.stringdata,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN5logic4GameE_t>.data,
     qt_static_metacall,
     nullptr,
-    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN4GameE_t>.metaTypes,
+    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN5logic4GameE_t>.metaTypes,
     nullptr
 } };
 
-void Game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void logic::Game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     auto *_t = static_cast<Game *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->pieceMoved((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[2]))); break;
-        case 1: { bool _r = _t->move((*reinterpret_cast< std::add_pointer_t<Emplacement>>(_a[1])));
+        case 0: _t->pieceMoved((*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2]))); break;
+        case 1: { bool _r = _t->move((*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (Game::*)(Emplacement , Emplacement )>(_a, &Game::pieceMoved, 0))
+        if (QtMocHelpers::indexOfMethod<void (Game::*)(logic::Emplacement , logic::Emplacement )>(_a, &Game::pieceMoved, 0))
             return;
     }
 }
 
-const QMetaObject *Game::metaObject() const
+const QMetaObject *logic::Game::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Game::qt_metacast(const char *_clname)
+void *logic::Game::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN4GameE_t>.strings))
+    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN5logic4GameE_t>.strings))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int Game::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int logic::Game::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -220,7 +222,7 @@ int Game::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Game::pieceMoved(Emplacement _t1, Emplacement _t2)
+void logic::Game::pieceMoved(logic::Emplacement _t1, logic::Emplacement _t2)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
 }
