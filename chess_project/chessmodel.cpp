@@ -86,7 +86,7 @@ void Echequier::ajouterPiece(std::string pieceType, Emplacement emplacement, boo
             pieces_.push_back(std::make_unique<Roi>());
             // verifier cmb de rois il y a
             // if(dynamic_cast<Roi*>(&(*(pieces_[pieces_.size() - 1])))->nbrRois_)
-        }
+            }
         else if(pieceType == "Tour")
             pieces_.push_back(std::make_unique<Tour>());
         else if(pieceType == "Cavalier")
@@ -159,6 +159,7 @@ bool Game::move(Emplacement positionInitialOuFinal){
         return true;
     }
     else{
+        bool isIllegal = true;
         bool enEchec = false;
         {
             MoveTemporaire moveTemporaire(emplacementInteresser_, positionInitialOuFinal, this);
@@ -167,13 +168,14 @@ bool Game::move(Emplacement positionInitialOuFinal){
         for(auto&& piece:echequier_->pieces_){
             if(piece->getEmplacement().convertHorizontalPos()==emplacementInteresser_.convertHorizontalPos()&&piece->getEmplacement().verticalPos==emplacementInteresser_.verticalPos){
                 veutBouger_ = false;
-                if(!enEchec){
+                isIllegal = isIllegalMove(piece, positionInitialOuFinal);
+                if(!enEchec && !isIllegal){
                     piece->setEmplacement(positionInitialOuFinal);
                     prochainEmplacement_ = positionInitialOuFinal;
                 }
             }
         }
-        return enEchec;
+        return enEchec || isIllegal;
     }
 };
 
