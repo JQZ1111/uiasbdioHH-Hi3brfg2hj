@@ -153,7 +153,7 @@ void MainWindow::deplacerPiece(){
                 buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setStyleSheet("background-color:brown;color:white");
         }
         buttons_[TAILLEECHEQUIER*emplacementPrecedent_.verticalPos + emplacementPrecedent_.convertHorizontalPos()]->setText("");
-        buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText(labelPieceDeplacer_); // changer ca quand on aura plus qu'une type de piece
+        buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText(labelPieceDeplacer_);
     }
 }
 
