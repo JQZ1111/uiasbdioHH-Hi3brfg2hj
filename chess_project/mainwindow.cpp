@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QColorDialog>
 #include <QComboBox>
+#include <QMessageBox>
 #include <qcombobox.h>
 
 namespace vue{
@@ -21,8 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(comboBoxNoirOuBlanc_, SIGNAL(currentIndexChanged(int)), this, SLOT(setNoirOuBlanc(int)));
     QObject::connect(comboBoxPiecesSelection_, SIGNAL(currentIndexChanged(int)), this, SLOT(setTypePieceAjouter(int)));
     makeCentralWidget();
-    QObject::connect(this, SIGNAL(pieceAjouter(std::string, logic::Emplacement, bool)), game_->getEchequier().get(), SLOT(ajouterPiece(std::string, logic::Emplacement,bool)));
     QObject::connect(addPieceButton_, SIGNAL(clicked()), this, SLOT(ajouterPiece()));
+    QObject::connect(this, SIGNAL(pieceAjouter(std::string, logic::Emplacement, bool)), game_->getEchequier().get(), SLOT(ajouterPiece(std::string, logic::Emplacement,bool)));
+    QObject::connect(game_->getEchequier().get(), SIGNAL(ajoutDUnePiece(std::string, logic::Emplacement, bool)), this, SLOT(ajouterPieceSurVue(std::string,logic::Emplacement,bool)));
+    // Erreur ajout pièce
+    QObject::connect(game_->getEchequier().get(), SIGNAL(erreurAjout()), this, SLOT(ajoutErreurHandler()));
     // Cant center it tho
     for(int i = 0; i < TAILLEECHEQUIER; i++){
         for(int j = 0; j < TAILLEECHEQUIER; j ++){
@@ -120,20 +124,23 @@ void MainWindow::ajouterPiece(){
     logic::Emplacement emplacement = {pieceHorizontalPos_, pieceVerticalPos_};
     bool isBlack = noirOuPas_;
     std::string typePieceAjouter = typePieceAjouter_;
+    emit pieceAjouter(typePieceAjouter, emplacement, isBlack);
+}
+
+void MainWindow::ajouterPieceSurVue(std::string pieceType, logic::Emplacement emplacement, bool isBlack){
     if(!isBlack){
         if((emplacement.verticalPos + emplacement.convertHorizontalPos())%2 == 1)
             buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setStyleSheet("background-color:yellow;color:white");
         else
             buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setStyleSheet("background-color:brown;color:white");
     }
-    if(typePieceAjouter == "Roi")
+    if(pieceType == "Roi")
         buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("R");
-    else if(typePieceAjouter == "Tour")
+    else if(pieceType == "Tour")
         buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("T");
-    else if(typePieceAjouter_ == "Cavalier")
+    else if(pieceType == "Cavalier")
         buttons_[TAILLEECHEQUIER*emplacement.verticalPos + emplacement.convertHorizontalPos()]->setText("C");
-    emit pieceAjouter(typePieceAjouter, emplacement, isBlack);
-}
+};
 
 void MainWindow::deplacerPiece(){
     QPushButton* button = qobject_cast<QPushButton*>(sender());
@@ -155,6 +162,13 @@ void MainWindow::deplacerPiece(){
         buttons_[TAILLEECHEQUIER*emplacementPrecedent_.verticalPos + emplacementPrecedent_.convertHorizontalPos()]->setText("");
         buttons_[TAILLEECHEQUIER*position.verticalPos + position.convertHorizontalPos()]->setText(labelPieceDeplacer_); // changer ca quand on aura plus qu'une type de piece
     }
+}
+
+void MainWindow::ajoutErreurHandler(){
+    QMessageBox::information(
+        this,
+        tr("Warning"),
+        tr("Peut pas avoir plus que 2 rois") );
 }
 
 MainWindow::~MainWindow()

@@ -69,6 +69,7 @@ public slots:
     // mettre un enleverPiece
 signals:
     void ajoutDUnePiece(std::string pieceType,logic::Emplacement emplacement, bool isBlack);
+    void erreurAjout();
 };
 
 

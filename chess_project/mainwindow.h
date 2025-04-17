@@ -32,10 +32,12 @@ public:
 public slots:
     void deplacerPiece();
     void ajouterPiece();
+    void ajouterPieceSurVue(std::string pieceType, logic::Emplacement emplacement, bool isBlack);
     void setHorizontalPosition(int horizontalPos);
     void setVerticalPosition(int verticalPos);
     void setNoirOuBlanc(int noirOuBlanc);
     void setTypePieceAjouter(int pieceTypeIndex);
+    void ajoutErreurHandler();
 private:
     Ui::MainWindow *ui;
     QGridLayout* layout_;

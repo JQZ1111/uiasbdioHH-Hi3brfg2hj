@@ -83,9 +83,18 @@ void Echequier::ajouterPiece(std::string pieceType, Emplacement emplacement, boo
     // Need to change that, piece is an abstract class now
     if(!isTherePiece(emplacement)){
         if(pieceType == "Roi"){
-            pieces_.push_back(std::make_unique<Roi>());
+            try{
+                pieces_.push_back(std::make_unique<Roi>());
+                if(dynamic_cast<Roi*>(&(*(pieces_[pieces_.size() - 1])))->nbrRois_ >= 3){
+                    pieces_.pop_back();
+                    throw std::logic_error("Trop de rois");
+                }
+            }
+            catch(std::logic_error& e){
+                emit erreurAjout();
+                return ;
+            }
             // verifier cmb de rois il y a
-            // if(dynamic_cast<Roi*>(&(*(pieces_[pieces_.size() - 1])))->nbrRois_)
             }
         else if(pieceType == "Tour")
             pieces_.push_back(std::make_unique<Tour>());

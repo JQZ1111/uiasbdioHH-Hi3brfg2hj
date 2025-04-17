@@ -48,6 +48,7 @@ template <> constexpr inline auto vue::MainWindow::qt_create_metaobjectdata<qt_m
         "isBlack",
         "deplacerPiece",
         "ajouterPiece",
+        "ajouterPieceSurVue",
         "setHorizontalPosition",
         "horizontalPos",
         "setVerticalPosition",
@@ -55,7 +56,8 @@ template <> constexpr inline auto vue::MainWindow::qt_create_metaobjectdata<qt_m
         "setNoirOuBlanc",
         "noirOuBlanc",
         "setTypePieceAjouter",
-        "pieceTypeIndex"
+        "pieceTypeIndex",
+        "ajoutErreurHandler"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -67,22 +69,28 @@ template <> constexpr inline auto vue::MainWindow::qt_create_metaobjectdata<qt_m
         QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'ajouterPiece'
         QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPublic, QMetaType::Void),
+        // Slot 'ajouterPieceSurVue'
+        QtMocHelpers::SlotData<void(std::string, logic::Emplacement, bool)>(10, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 4 }, { 0x80000000 | 5, 6 }, { QMetaType::Bool, 7 },
+        }}),
         // Slot 'setHorizontalPosition'
-        QtMocHelpers::SlotData<void(int)>(10, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 11 },
+        QtMocHelpers::SlotData<void(int)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 12 },
         }}),
         // Slot 'setVerticalPosition'
-        QtMocHelpers::SlotData<void(int)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 13 },
+        QtMocHelpers::SlotData<void(int)>(13, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 14 },
         }}),
         // Slot 'setNoirOuBlanc'
-        QtMocHelpers::SlotData<void(int)>(14, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 15 },
+        QtMocHelpers::SlotData<void(int)>(15, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 16 },
         }}),
         // Slot 'setTypePieceAjouter'
-        QtMocHelpers::SlotData<void(int)>(16, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 17 },
+        QtMocHelpers::SlotData<void(int)>(17, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 18 },
         }}),
+        // Slot 'ajoutErreurHandler'
+        QtMocHelpers::SlotData<void()>(19, 2, QMC::AccessPublic, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -109,10 +117,12 @@ void vue::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 0: _t->pieceAjouter((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         case 1: _t->deplacerPiece(); break;
         case 2: _t->ajouterPiece(); break;
-        case 3: _t->setHorizontalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 4: _t->setVerticalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 5: _t->setNoirOuBlanc((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 6: _t->setTypePieceAjouter((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 3: _t->ajouterPieceSurVue((*reinterpret_cast< std::add_pointer_t<std::string>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<logic::Emplacement>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 4: _t->setHorizontalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 5: _t->setVerticalPosition((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->setNoirOuBlanc((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 7: _t->setTypePieceAjouter((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 8: _t->ajoutErreurHandler(); break;
         default: ;
         }
     }
@@ -141,14 +151,14 @@ int vue::MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
 }
